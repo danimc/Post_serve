@@ -12,17 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.esRolValido = void 0;
+exports.passValido = exports.rolValido = void 0;
 const rol_model_1 = __importDefault(require("../models/rol.model"));
 // Verifica que el rol ingresado este dado de alta en la BD
-const esRolValido = (rol) => __awaiter(void 0, void 0, void 0, function* () {
+const rolValido = (rol) => __awaiter(void 0, void 0, void 0, function* () {
     const existeRol = yield rol_model_1.default.findOne({ where: { 'id': rol } });
     if (!existeRol) {
-        throw new Error('El Rol Seleccionado no existe');
+        return { msg: "El Rol seleccionado no existe en la BD" };
     }
     if (+rol === 1) {
-        throw new Error('No se puede asignar el rol de Administrador a otro usuario');
+        return { msg: "No se puede asignar el rol de Administrador a otro usuario" };
     }
 });
-exports.esRolValido = esRolValido;
-//# sourceMappingURL=validador-db.helper.js.map
+exports.rolValido = rolValido;
+const passValido = (password) => {
+    if (+password.length <= 6) {
+        return { msg: 'La contraseña debe tener una longitud minima de 6 caracteres' };
+    }
+};
+exports.passValido = passValido;
+//# sourceMappingURL=validador-usuario.helper.js.map

@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import crypt from "bcryptjs";
 import Usuario from '../models/usuario.model';
+import { esRolValido } from "../helpers/validador-db.helper";
+import { passValido, rolValido } from "../helpers/validador-usuario.helper";
 
 
 export const getUsuarios = async (req: Request, res: Response) => {
@@ -36,6 +38,10 @@ export const getUsuario = async (req: Request, res: Response) => {
 export const postUsuario = async (req: Request, res: Response) => {
 
     const { nombre, email, password, rol } = req.body;
+    if (rol) {
+        esRolValido(rol);
+    }
+
     const usuario = new Usuario({ nombre, email, password, rol });
 
     // Encriptando contraseña
@@ -60,12 +66,26 @@ export const postUsuario = async (req: Request, res: Response) => {
 
 export const puttUsuario = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { password, ...data } = req.body;
+    const { password, rol, ...data } = req.body;
 
     if (password) {
+        const passErr = passValido(password);
+        if (passErr) {
+            return res.status(400).json(passErr);
+        }
+
         // Encriptando contraseña
         const salt = crypt.genSaltSync();
         data.password = crypt.hashSync(password, salt);
+    }
+
+    if (rol) {
+        const rolErr = await rolValido(rol);
+        // si el rol es Invalido
+        if (rolErr) {
+            return res.status(400).json(rolErr);
+        }
+        data.rol = rol;
     }
 
     try {

@@ -7,10 +7,21 @@ import { emailExiste, esAdminRol, esRolPermitido, existeUsuarioId, validarCampos
 
 const router = Router();
 
-router.get('/',getUsuarios);
-router.get('/:id',getUsuario);
+router.get('/',[
+    validarJWT,
+    esAdminRol,
+    validarCampos
+],getUsuarios);
+
+router.get('/:id',[
+    validarJWT,
+    esAdminRol,
+    validarCampos
+],getUsuario);
 
 router.post('/', [
+    validarJWT,
+    esAdminRol,
     check('email', 'No es un correo Valido').isEmail(),
     check('email').custom(emailExiste),
     check('nombre', "El Nombre de usuario es obligatorio").not().isEmpty(),
@@ -20,6 +31,8 @@ router.post('/', [
 ] , postUsuario);
 
 router.put('/:id',[
+    validarJWT,
+    esAdminRol,
     check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     check('id').custom(existeUsuarioId),
     validarCampos
@@ -28,7 +41,6 @@ router.put('/:id',[
 router.delete('/:id',[
     validarJWT,
     esAdminRol,
-    esRolPermitido(1),
     check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     check('id').custom(existeUsuarioId),
     validarCampos

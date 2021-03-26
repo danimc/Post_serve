@@ -26,6 +26,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deletetUsuario = exports.puttUsuario = exports.postUsuario = exports.getUsuario = exports.getUsuarios = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const usuario_model_1 = __importDefault(require("../models/usuario.model"));
+const validador_db_helper_1 = require("../helpers/validador-db.helper");
+const validador_usuario_helper_1 = require("../helpers/validador-usuario.helper");
 const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // obtenemos solo los usuarios activos (estado true) del sistema
     const query = { estado: true };
@@ -54,6 +56,9 @@ const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getUsuario = getUsuario;
 const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { nombre, email, password, rol } = req.body;
+    if (rol) {
+        validador_db_helper_1.esRolValido(rol);
+    }
     const usuario = new usuario_model_1.default({ nombre, email, password, rol });
     // Encriptando contraseña
     const salt = bcryptjs_1.default.genSaltSync();
@@ -73,11 +78,23 @@ const postUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.postUsuario = postUsuario;
 const puttUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const _a = req.body, { password } = _a, data = __rest(_a, ["password"]);
+    const _a = req.body, { password, rol } = _a, data = __rest(_a, ["password", "rol"]);
     if (password) {
+        const passErr = validador_usuario_helper_1.passValido(password);
+        if (passErr) {
+            return res.status(400).json(passErr);
+        }
         // Encriptando contraseña
         const salt = bcryptjs_1.default.genSaltSync();
         data.password = bcryptjs_1.default.hashSync(password, salt);
+    }
+    if (rol) {
+        const rolErr = yield validador_usuario_helper_1.rolValido(rol);
+        // si el rol es Invalido
+        if (rolErr) {
+            return res.status(400).json(rolErr);
+        }
+        data.rol = rol;
     }
     try {
         const usuario = yield usuario_model_1.default.findByPk(id);
