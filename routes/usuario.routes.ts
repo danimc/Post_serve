@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 import { getUsuario, getUsuarios, postUsuario, puttUsuario, deletetUsuario } from '../controllers/usuario.controller';
 import { emailExiste, existeUsuarioId, validarCampos } from '../middlewares/validar-campos';
 import { esRolValido } from '../helpers/validador-db.helper';
+import { validarJWT } from '../middlewares/validar-jwt';
 
 const router = Router();
 
@@ -25,6 +26,7 @@ router.put('/:id',[
 ],puttUsuario);
 
 router.delete('/:id',[
+    validarJWT,
     check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     check('id').custom(existeUsuarioId),
     validarCampos

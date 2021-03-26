@@ -31,7 +31,7 @@ const Usuario = connection_1.default.define('tb-usuarios', {
     },
 });
 Usuario.prototype.toJSON = function () {
-    let values = Object.assign({}, this.get());
+    const values = Object.assign({}, this.get());
     delete values.password;
     return values;
 };

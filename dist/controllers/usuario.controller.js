@@ -102,6 +102,7 @@ const puttUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.puttUsuario = puttUsuario;
 const deletetUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const uid = req.uid;
     try {
         const usuario = yield usuario_model_1.default.findByPk(id);
         if (!usuario) {
@@ -115,7 +116,8 @@ const deletetUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function*
         //await usuario.destroy();
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,
-            data: usuario
+            data: usuario,
+            uid
         });
     }
     catch (error) {

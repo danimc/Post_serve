@@ -97,6 +97,8 @@ export const deletetUsuario = async(req: Request, res: Response) => {
 
     const { id } = req.params;
 
+    const uid = req.uid;
+
     try {
 
         const usuario = await Usuario.findByPk(id);
@@ -113,7 +115,8 @@ export const deletetUsuario = async(req: Request, res: Response) => {
 
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,
-            data: usuario
+            data: usuario,
+            uid
         });
 
     } catch (error) {
