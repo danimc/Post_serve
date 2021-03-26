@@ -1,9 +1,9 @@
 import { Router} from 'express';
 import { check } from 'express-validator';
 import { getUsuario, getUsuarios, postUsuario, puttUsuario, deletetUsuario } from '../controllers/usuario.controller';
-import { emailExiste, existeUsuarioId, validarCampos } from '../middlewares/validar-campos';
 import { esRolValido } from '../helpers/validador-db.helper';
-import { validarJWT } from '../middlewares/validar-jwt';
+import { emailExiste, esAdminRol, esRolPermitido, existeUsuarioId, validarCampos, validarJWT } from '../middlewares';
+
 
 const router = Router();
 
@@ -27,6 +27,8 @@ router.put('/:id',[
 
 router.delete('/:id',[
     validarJWT,
+    esAdminRol,
+    esRolPermitido(1),
     check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     check('id').custom(existeUsuarioId),
     validarCampos

@@ -16,7 +16,7 @@ export const getUsuarios = async (req: Request, res: Response) => {
     res.json({
         total,
         usuarios
-     });
+    });
 }
 
 export const getUsuario = async (req: Request, res: Response) => {
@@ -93,11 +93,9 @@ export const puttUsuario = async (req: Request, res: Response) => {
     }
 }
 
-export const deletetUsuario = async(req: Request, res: Response) => {
+export const deletetUsuario = async (req: Request, res: Response) => {
 
     const { id } = req.params;
-
-    const uid = req.uid;
 
     try {
 
@@ -109,14 +107,13 @@ export const deletetUsuario = async(req: Request, res: Response) => {
         }
 
         //dando de baja a un usuario sin eliminarlo de la BD
-        await usuario.update({estado: false});
+        await usuario.update({ estado: false });
         //Eliminando completamente al usuario
         //await usuario.destroy();
 
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,
             data: usuario,
-            uid
         });
 
     } catch (error) {
@@ -127,5 +124,5 @@ export const deletetUsuario = async(req: Request, res: Response) => {
     }
 
 
- 
+
 }
