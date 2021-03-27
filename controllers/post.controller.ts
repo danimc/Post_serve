@@ -7,10 +7,22 @@ import { QueryTypes } from "sequelize";
 // Lista de todos los Post
 export const getPosts = async (req: Request, res: Response) => {
 
+    const Hoy: Date = new Date();
+
     const [total, posts] = await Promise.all([
         Post.count(),
         Post.findAll()
     ]);
+
+    posts.forEach(post => {
+        const fecha: Date = post.fecha_creado;
+        const dif = +Hoy - +fecha;
+        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+
+        if (dias > 7) {
+            post.dataValues.tag = 'Post antiguio';
+        }
+    });
 
     res.json({
         total,

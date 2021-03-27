@@ -29,10 +29,19 @@ const historial_post_model_1 = __importDefault(require("../models/historial-post
 const sequelize_1 = require("sequelize");
 // Lista de todos los Post
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const Hoy = new Date();
     const [total, posts] = yield Promise.all([
         post_model_1.default.count(),
         post_model_1.default.findAll()
     ]);
+    posts.forEach(post => {
+        const fecha = post.fecha_creado;
+        const dif = +Hoy - +fecha;
+        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+        if (dias > 7) {
+            post.dataValues.tag = 'Post antiguio';
+        }
+    });
     res.json({
         total,
         posts

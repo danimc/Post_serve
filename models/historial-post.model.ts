@@ -3,7 +3,7 @@ import { DataTypes } from "sequelize";
 import db from "../database/connection";
 
 
-const Historial = db.define('tb-historial-posts', {
+const Historial = db.define('tb-historial', {
     post: {
         type: DataTypes.NUMBER,
         allowNull: false

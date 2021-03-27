@@ -4,7 +4,10 @@ const sequelize_1 = require("sequelize");
 const db = new sequelize_1.Sequelize('post_serve', 'admin', '123', {
     host: 'localhost',
     dialect: 'mariadb',
-    //logging: false
+    //logging: false,
+    define: {
+        freezeTableName: true
+    }
 });
 exports.default = db;
 //# sourceMappingURL=connection.js.map

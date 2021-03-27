@@ -22,7 +22,6 @@ export const getReviews = async (req: Request, res: Response) => {
         total,
         reviews
     });
-
     
 }
 
