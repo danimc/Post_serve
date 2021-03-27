@@ -1,7 +1,30 @@
 import { Request, Response } from "express";
 import { esCalificacionValida, esUsuarioRegistrado } from "../helpers/validador-post.helper";
 import Review from '../models/review-model';
+import Post from '../models/post.model';
 
+
+export const getReviews = async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+    const query = {
+        post: id
+    }
+
+    const [post, total, reviews] = await Promise.all([
+        Post.findByPk(id),
+        Review.count({ where: query }),
+        Review.findAll({ where: query })
+    ]);
+
+    res.json({
+        post,
+        total,
+        reviews
+    });
+
+    
+}
 
 
 export const postReview = async (req: Request, res: Response) => {
@@ -50,3 +73,5 @@ export const postReview = async (req: Request, res: Response) => {
         data
     });
 }
+
+

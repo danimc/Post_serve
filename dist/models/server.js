@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const usuario_routes_1 = __importDefault(require("../routes/usuario.routes"));
 const auth_routes_1 = __importDefault(require("../routes/auth.routes"));
 const post_routes_1 = __importDefault(require("../routes/post.routes"));
 const reviews_routes_1 = __importDefault(require("../routes/reviews.routes"));
+const usuario_routes_1 = __importDefault(require("../routes/usuario.routes"));
 const connection_1 = __importDefault(require("../database/connection"));
 class Server {
     constructor() {

@@ -14,7 +14,7 @@ router.get('/:id', [
     middlewares_1.validarCampos
 ], post_controller_1.getPost);
 // Nuevo Post
-router.post('/nuevo', [
+router.post('/', [
     middlewares_1.validarJWT,
     validar_roles_1.esRolPermitido(1, 2),
     express_validator_1.check('titulo', 'Campo Titulo obligatorio').notEmpty(),
@@ -22,7 +22,7 @@ router.post('/nuevo', [
     middlewares_1.validarCampos
 ], post_controller_1.postNuevoPost);
 // Actualizar Post
-router.put('/actualizar/:id', [
+router.put('/:id', [
     middlewares_1.validarJWT,
     validar_roles_1.esRolPermitido(1, 3),
     express_validator_1.check('id', 'No es un formato Valido de Id para un Post').isNumeric(),

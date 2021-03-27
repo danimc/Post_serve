@@ -8,8 +8,8 @@ import { QueryTypes } from "sequelize";
 export const getPosts = async (req: Request, res: Response) => {
 
     const [total, posts] = await Promise.all([
-        Post.count({ where: query }),
-        Post.findAll({ where: query })
+        Post.count(),
+        Post.findAll()
     ]);
 
     res.json({

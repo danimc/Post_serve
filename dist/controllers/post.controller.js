@@ -30,8 +30,8 @@ const sequelize_1 = require("sequelize");
 // Lista de todos los Post
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const [total, posts] = yield Promise.all([
-        post_model_1.default.count({ where: query }),
-        post_model_1.default.findAll({ where: query })
+        post_model_1.default.count(),
+        post_model_1.default.findAll()
     ]);
     res.json({
         total,

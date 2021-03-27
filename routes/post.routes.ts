@@ -15,7 +15,7 @@ router.get('/:id', [
 ], getPost);
 
 // Nuevo Post
-router.post('/nuevo', [
+router.post('/', [
     validarJWT,
     esRolPermitido(1, 2),
     check('titulo', 'Campo Titulo obligatorio').notEmpty(),
@@ -24,7 +24,7 @@ router.post('/nuevo', [
 ], postNuevoPost);
 
 // Actualizar Post
-router.put('/actualizar/:id', [
+router.put('/:id', [
     validarJWT,
     esRolPermitido(1, 3),
     check('id', 'No es un formato Valido de Id para un Post').isNumeric(),

@@ -12,9 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postReview = void 0;
+exports.postReview = exports.getReviews = void 0;
 const validador_post_helper_1 = require("../helpers/validador-post.helper");
 const review_model_1 = __importDefault(require("../models/review-model"));
+const post_model_1 = __importDefault(require("../models/post.model"));
+const getReviews = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const query = {
+        post: id
+    };
+    const [post, total, reviews] = yield Promise.all([
+        post_model_1.default.findByPk(id),
+        review_model_1.default.count({ where: query }),
+        review_model_1.default.findAll({ where: query })
+    ]);
+    res.json({
+        post,
+        total,
+        reviews
+    });
+});
+exports.getReviews = getReviews;
 const postReview = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const fecha = new Date().toLocaleString();
