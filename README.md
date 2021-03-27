@@ -12,6 +12,24 @@ Servidor en Node Express para sistema de post's
 npm node dist/app
 ```
 
+## Documentacion de los Endpoints
+
+en la siguiente dirección podrá consultar la documentacion de todos los endpoits del sistema:
+
+https://documenter.getpostman.com/view/4273954/TzCJgAS1
+
+### iniciando el Sistema
+
+  una vez que se haya cargado correctamente el sistema, el unico usuario precargado es el **administrador**, las credenciales que necesitara para ingresar al sistema seran:
+  
+  ```
+    {
+    "email": "daniel_k310a@hotmail.com",
+    "password": "123456"
+   }
+```
+
+revise la documentacion de los endpoints para mas información.
 
 
 
