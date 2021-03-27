@@ -5,7 +5,14 @@ Servidor en Node Express para sistema de post's
   se añadio en el directorio **database** el script .sql para crear las tablas necesarias del sistema, de esta manera, se podra ingresar las tablas a una DB ya creada.
 
 ### Despliegue del sistema
-  el proyecto fue desarrollado con typescript, por lo cual, el deslegable del sistema se encuentra en la carpeta **dist/**
+
+  lo primero que debemos hacer es ejecutar npm-install para recuperar todas las dependencias de noder
+  
+ ```
+npm install
+```
+
+ el proyecto fue desarrollado con typescript, por lo cual, el deslegable del sistema se encuentra en la carpeta **dist/**
   
  para ejecutar el sistema hay que realizarlo desde la carpeta dist/
  ```
