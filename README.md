@@ -6,7 +6,7 @@ Servidor en Node Express para sistema de post's
 
 ### Despliegue del sistema
 
-  lo primero que debemos hacer es ejecutar npm-install para recuperar todas las dependencias de noder
+  lo primero que debemos hacer es ejecutar npm-install para recuperar todas las dependencias de node
   
  ```
 npm install
