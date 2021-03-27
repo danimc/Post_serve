@@ -11,6 +11,7 @@ const router = express_1.Router();
 router.post('/:id', [
     express_validator_1.check('id', 'Debe ingresar el Id del Post').isNumeric(),
     express_validator_1.check('id').custom(middlewares_1.existePostId),
+    express_validator_1.check('calificacion', "la calificacion debe ser un valor entre 0 y 5").if(express_validator_1.body('calificacion').exists()).isFloat(),
     middlewares_1.validarCampos
 ], review_controller_1.postReview);
 router.get('/:id', [

@@ -1,5 +1,5 @@
 import { Router} from 'express';
-import { check } from 'express-validator';
+import { check, body } from 'express-validator';
 import { getUsuario, getUsuarios, postUsuario, puttUsuario, deletetUsuario } from '../controllers/usuario.controller';
 import { esRolValido } from '../helpers/validador-db.helper';
 import { emailExiste, esAdminRol, existeUsuarioId, validarCampos, validarJWT } from '../middlewares';
@@ -35,6 +35,8 @@ router.put('/:id',[
     esAdminRol,
     check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     check('id').custom(existeUsuarioId),
+    check('email', 'no es un correo valido').if(body('email').exists()).isEmail(),
+    check('email').custom(emailExiste),
     validarCampos
 ],puttUsuario);
 

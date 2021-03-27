@@ -1,8 +1,12 @@
 import {Sequelize} from 'sequelize';
+import config from '../config/config';
 
-const db = new Sequelize('post_serve', 'admin','123' ,{
-    host: 'localhost',
-    dialect: 'mariadb',
+const db = new Sequelize(
+    config.database,
+    config.userDb,
+    config.passwordDb ,{
+    host: config.hostDb,
+    dialect: config.dialect,
     //logging: false,
     define: {
         freezeTableName: true

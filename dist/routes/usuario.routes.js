@@ -31,6 +31,8 @@ router.put('/:id', [
     middlewares_1.esAdminRol,
     express_validator_1.check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     express_validator_1.check('id').custom(middlewares_1.existeUsuarioId),
+    express_validator_1.check('email', 'no es un correo valido').if(express_validator_1.body('email').exists()).isEmail(),
+    express_validator_1.check('email').custom(middlewares_1.emailExiste),
     middlewares_1.validarCampos
 ], usuario_controller_1.puttUsuario);
 router.delete('/:id', [

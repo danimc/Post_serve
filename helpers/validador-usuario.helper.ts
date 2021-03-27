@@ -18,3 +18,4 @@ export const passValido = (password:string) => {
         return { msg: 'La contraseña debe tener una longitud minima de 6 caracteres' };
     }
 }
+
