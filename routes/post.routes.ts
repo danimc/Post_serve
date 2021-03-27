@@ -39,12 +39,18 @@ router.delete('/:id', [
     check('id').custom(existePostId),
     validarCampos
 ], deletePost);
+
+/*
+se terminan los endpoints de post y comienzan los generales
+*/
+
 // Mostrar el historial de movimientos del Post
 router.get('/seguimiento/:id', [
     validarJWT,
     esRolPermitido(1,2),
     validarCampos
 ], getHistorialPost);
+
 
 
 

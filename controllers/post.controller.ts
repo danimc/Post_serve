@@ -4,8 +4,6 @@ import Historial from '../models/historial-post.model';
 import { QueryTypes } from "sequelize";
 
 
-
-
 // Lista de todos los Post
 export const getPosts = async (req: Request, res: Response) => {
 
@@ -33,27 +31,6 @@ export const getPost = async (req: Request, res: Response) => {
         });
     }
 }
-
-export const getHistorialPost = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
-    const post = await Post.findByPk(id);
-
-    if (!post) {
-        res.status(404).json({
-            msg: `No existe el post ${id}`
-        });
-    }
-
-    const historial = await Post.sequelize?.query('call `sp-historial` (:param1)',
-        { replacements: { param1: id }, type: QueryTypes.SELECT });
-
-    if (historial) {
-        const { meta, ...rest } = historial[0];
-        res.json(rest);
-    }
-}
-
 
 export const postNuevoPost = async (req: Request, res: Response) => {
 
@@ -193,4 +170,26 @@ export const deletePost = async (req: Request, res: Response) => {
         });
     }
 }
+
+export const getHistorialPost = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const post = await Post.findByPk(id);
+
+    if (!post) {
+        res.status(404).json({
+            msg: `No existe el post ${id}`
+        });
+    }
+
+    const historial = await Post.sequelize?.query('call `sp-historial` (:param1)',
+        { replacements: { param1: id }, type: QueryTypes.SELECT });
+
+    if (historial) {
+        const { meta, ...rest } = historial[0];
+        res.json(rest);
+    }
+}
+
+
 

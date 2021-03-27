@@ -37,6 +37,9 @@ router.delete('/:id', [
     express_validator_1.check('id').custom(validar_campos_1.existePostId),
     middlewares_1.validarCampos
 ], post_controller_1.deletePost);
+/*
+se terminan los endpoints de post y comienzan los generales
+*/
 // Mostrar el historial de movimientos del Post
 router.get('/seguimiento/:id', [
     middlewares_1.validarJWT,

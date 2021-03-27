@@ -15,4 +15,5 @@ __exportStar(require("./usuario.model"), exports);
 __exportStar(require("./post.model"), exports);
 __exportStar(require("./rol.model"), exports);
 __exportStar(require("./historial-post.model"), exports);
+__exportStar(require("./review-model"), exports);
 //# sourceMappingURL=index.js.map

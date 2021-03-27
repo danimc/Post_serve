@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePost = exports.putPost = exports.postNuevoPost = exports.getHistorialPost = exports.getPost = exports.getPosts = void 0;
+exports.getHistorialPost = exports.deletePost = exports.putPost = exports.postNuevoPost = exports.getPost = exports.getPosts = void 0;
 const post_model_1 = __importDefault(require("../models/post.model"));
 const historial_post_model_1 = __importDefault(require("../models/historial-post.model"));
 const sequelize_1 = require("sequelize");
@@ -53,22 +53,6 @@ const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getPost = getPost;
-const getHistorialPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    const { id } = req.params;
-    const post = yield post_model_1.default.findByPk(id);
-    if (!post) {
-        res.status(404).json({
-            msg: `No existe el post ${id}`
-        });
-    }
-    const historial = yield ((_a = post_model_1.default.sequelize) === null || _a === void 0 ? void 0 : _a.query('call `sp-historial` (:param1)', { replacements: { param1: id }, type: sequelize_1.QueryTypes.SELECT }));
-    if (historial) {
-        const _b = historial[0], { meta } = _b, rest = __rest(_b, ["meta"]);
-        res.json(rest);
-    }
-});
-exports.getHistorialPost = getHistorialPost;
 const postNuevoPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const usuario = req.usuario.id;
     const fechaCreado = new Date().toLocaleString();
@@ -181,4 +165,20 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deletePost = deletePost;
+const getHistorialPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
+    const { id } = req.params;
+    const post = yield post_model_1.default.findByPk(id);
+    if (!post) {
+        res.status(404).json({
+            msg: `No existe el post ${id}`
+        });
+    }
+    const historial = yield ((_a = post_model_1.default.sequelize) === null || _a === void 0 ? void 0 : _a.query('call `sp-historial` (:param1)', { replacements: { param1: id }, type: sequelize_1.QueryTypes.SELECT }));
+    if (historial) {
+        const _b = historial[0], { meta } = _b, rest = __rest(_b, ["meta"]);
+        res.json(rest);
+    }
+});
+exports.getHistorialPost = getHistorialPost;
 //# sourceMappingURL=post.controller.js.map
