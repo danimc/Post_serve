@@ -126,10 +126,8 @@ const deletetUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 msg: 'El usuario ingresado no existe'
             });
         }
-        //dando de baja a un usuario sin eliminarlo de la BD
-        yield usuario.update({ estado: false });
         //Eliminando completamente al usuario
-        //await usuario.destroy();
+        yield usuario.destroy();
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,
             data: usuario,

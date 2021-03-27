@@ -2,7 +2,7 @@ import { Router} from 'express';
 import { check } from 'express-validator';
 import { getUsuario, getUsuarios, postUsuario, puttUsuario, deletetUsuario } from '../controllers/usuario.controller';
 import { esRolValido } from '../helpers/validador-db.helper';
-import { emailExiste, esAdminRol, esRolPermitido, existeUsuarioId, validarCampos, validarJWT } from '../middlewares';
+import { emailExiste, esAdminRol, existeUsuarioId, validarCampos, validarJWT } from '../middlewares';
 
 
 const router = Router();

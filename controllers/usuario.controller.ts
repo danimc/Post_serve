@@ -126,10 +126,9 @@ export const deletetUsuario = async (req: Request, res: Response) => {
             });
         }
 
-        //dando de baja a un usuario sin eliminarlo de la BD
-        await usuario.update({ estado: false });
+        
         //Eliminando completamente al usuario
-        //await usuario.destroy();
+        await usuario.destroy();
 
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,
@@ -142,7 +141,4 @@ export const deletetUsuario = async (req: Request, res: Response) => {
             msg: 'hubo un problema al intentar Eliminar el usuario'
         });
     }
-
-
-
 }
