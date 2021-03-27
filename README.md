@@ -30,7 +30,7 @@ https://documenter.getpostman.com/view/4273954/TzCJgAS1
   una vez que se haya cargado correctamente el sistema, el unico usuario precargado es el **administrador**, las credenciales que necesitara para ingresar al sistema seran:
   
   ```
-    {
+   {
     "email": "daniel_k310a@hotmail.com",
     "password": "123456"
    }
