@@ -13,6 +13,11 @@ router.get('/', [], post_controller_1.getPosts);
 router.get('/:id', [
     middlewares_1.validarCampos
 ], post_controller_1.getPost);
+router.get('/fecha/:fechaInicio/:fechaFin', [
+    express_validator_1.check('fechaInicio', 'Debe proporcionar la fecha en formato "YYYY-MM-DD"').isDate(),
+    express_validator_1.check('fechaFin', 'Debe proporcionar la fecha en formato "YYYY-MM-DD"').isDate(),
+    middlewares_1.validarCampos
+], post_controller_1.getPostsDate);
 // Nuevo Post
 router.post('/', [
     middlewares_1.validarJWT,

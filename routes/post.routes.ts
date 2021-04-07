@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
-import { postNuevoPost, getPosts, getPost, putPost, deletePost, getHistorialPost } from '../controllers/post.controller';
+import { postNuevoPost, getPosts, getPost, putPost, deletePost, getHistorialPost, getPostsDate } from '../controllers/post.controller';
 import { validarJWT, validarCampos } from '../middlewares/';
 import { esRolPermitido } from '../middlewares/validar-roles';
 import { existePostId } from '../middlewares/validar-campos';
+import { is } from 'sequelize/types/lib/operators';
 
 const router = Router();
 
@@ -13,6 +14,12 @@ router.get('/', [], getPosts);
 router.get('/:id', [
     validarCampos
 ], getPost);
+
+router.get('/fecha/:fechaInicio/:fechaFin', [
+    check('fechaInicio', 'Debe proporcionar la fecha en formato "YYYY-MM-DD"').isDate(),
+    check('fechaFin', 'Debe proporcionar la fecha en formato "YYYY-MM-DD"').isDate(),
+    validarCampos
+], getPostsDate);
 
 // Nuevo Post
 router.post('/', [

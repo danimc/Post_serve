@@ -1,32 +1,54 @@
 import { Request, Response } from "express";
 import Post from '../models/post.model';
 import Historial from '../models/historial-post.model';
-import { QueryTypes } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
+import { tagPosts } from "../helpers/validador-post.helper";
 
 
 // Lista de todos los Post
 export const getPosts = async (req: Request, res: Response) => {
-
-    const Hoy: Date = new Date();
-
     const [total, posts] = await Promise.all([
         Post.count(),
         Post.findAll()
     ]);
 
-    posts.forEach(post => {
-        const fecha: Date = post.fecha_creado;
-        const dif = +Hoy - +fecha;
-        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
-
-        if (dias > 7) {
-            post.dataValues.tag = 'Post antiguio';
-        }
-    });
+    const tagPost = tagPosts(posts);
 
     res.json({
         total,
-        posts
+        tagPost
+    });
+}
+
+// Lista filtrada por fecha
+export const getPostsDate = async (req: Request, res: Response) => {
+
+    const { fechaInicio, fechaFin } = req.params;
+
+    const fechaFinal = fechaFin + ' 23:59:59:999';
+    const params = {
+        fechaInicio: new Date(fechaInicio),
+        FechaFin: new Date(fechaFinal)
+    };
+
+    const qry = {
+        where: {
+            fecha_creado: {
+                [Op.between]: [params.fechaInicio, params.FechaFin]
+            }
+        }
+    };
+
+    const [total, posts] = await Promise.all([
+        Post.count(qry),
+        Post.findAll(qry)
+    ]);
+
+    const tagPost = tagPosts(posts);
+
+    res.json({
+        total,
+        tagPost
     });
 }
 

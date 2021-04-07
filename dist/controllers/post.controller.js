@@ -23,31 +23,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHistorialPost = exports.deletePost = exports.putPost = exports.postNuevoPost = exports.getPost = exports.getPosts = void 0;
+exports.getHistorialPost = exports.deletePost = exports.putPost = exports.postNuevoPost = exports.getPost = exports.getPostsDate = exports.getPosts = void 0;
 const post_model_1 = __importDefault(require("../models/post.model"));
 const historial_post_model_1 = __importDefault(require("../models/historial-post.model"));
 const sequelize_1 = require("sequelize");
+const validador_post_helper_1 = require("../helpers/validador-post.helper");
 // Lista de todos los Post
 const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const Hoy = new Date();
     const [total, posts] = yield Promise.all([
         post_model_1.default.count(),
         post_model_1.default.findAll()
     ]);
-    posts.forEach(post => {
-        const fecha = post.fecha_creado;
-        const dif = +Hoy - +fecha;
-        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
-        if (dias > 7) {
-            post.dataValues.tag = 'Post antiguio';
-        }
-    });
+    const tagPost = validador_post_helper_1.tagPosts(posts);
     res.json({
         total,
-        posts
+        tagPost
     });
 });
 exports.getPosts = getPosts;
+// Lista filtrada por fecha
+const getPostsDate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { fechaInicio, fechaFin } = req.params;
+    const fechaFinal = fechaFin + ' 23:59:59:999';
+    const params = {
+        fechaInicio: new Date(fechaInicio),
+        FechaFin: new Date(fechaFinal)
+    };
+    const qry = {
+        where: {
+            fecha_creado: {
+                [sequelize_1.Op.between]: [params.fechaInicio, params.FechaFin]
+            }
+        }
+    };
+    const [total, posts] = yield Promise.all([
+        post_model_1.default.count(qry),
+        post_model_1.default.findAll(qry)
+    ]);
+    const tagPost = validador_post_helper_1.tagPosts(posts);
+    res.json({
+        total,
+        tagPost
+    });
+});
+exports.getPostsDate = getPostsDate;
 // Consultar un unico Post
 const getPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

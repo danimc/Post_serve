@@ -19,3 +19,20 @@ export const esUsuarioRegistrado = async (usuario: number) => {
         }
     }
 }
+
+export const tagPosts = (posts: any[]) => {
+    const Hoy: Date = new Date();
+
+    posts.forEach(post => {
+        const fecha: Date = post.fecha_creado;
+        const dif = +Hoy - +fecha;
+        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+
+        if (dias > 7) {
+            post.dataValues.tag = 'Post antiguio';
+        }
+    });
+
+    return posts;
+
+}

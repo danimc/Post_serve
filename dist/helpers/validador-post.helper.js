@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.esUsuarioRegistrado = exports.esCalificacionValida = void 0;
+exports.tagPosts = exports.esUsuarioRegistrado = exports.esCalificacionValida = void 0;
 const usuario_model_1 = __importDefault(require("../models/usuario.model"));
 const esCalificacionValida = (calificacion) => {
     if (isNaN(calificacion)) {
@@ -32,4 +32,17 @@ const esUsuarioRegistrado = (usuario) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.esUsuarioRegistrado = esUsuarioRegistrado;
+const tagPosts = (posts) => {
+    const Hoy = new Date();
+    posts.forEach(post => {
+        const fecha = post.fecha_creado;
+        const dif = +Hoy - +fecha;
+        const dias = Math.floor(dif / (1000 * 60 * 60 * 24));
+        if (dias > 7) {
+            post.dataValues.tag = 'Post antiguio';
+        }
+    });
+    return posts;
+};
+exports.tagPosts = tagPosts;
 //# sourceMappingURL=validador-post.helper.js.map
