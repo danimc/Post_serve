@@ -14,10 +14,19 @@ npm install
 
  el proyecto fue desarrollado con typescript, por lo cual, el deslegable del sistema se encuentra en la carpeta **dist/**
   
- para ejecutar el sistema hay que realizarlo desde la carpeta dist/
+ para ejecutar el sistema se puede realizar de la siguiente manera:
  ```
-npm node dist/app
+npm start
 ```
+para produccion
+
+y 
+
+ ```
+npm test
+```
+para el entorno de pruebas
+
 
 ## Documentacion de los Endpoints
 
