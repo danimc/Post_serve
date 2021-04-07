@@ -1,6 +1,6 @@
 export default {
     jwtSecret: "@QEGTUI",
-    database: 'node',
+    database: 'post_serve',
     userDb: 'admin',
     passwordDb: '123',
     hostDb: 'localhost',
