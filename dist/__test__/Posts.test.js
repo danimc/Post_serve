@@ -17,12 +17,14 @@ const app_1 = __importDefault(require("../models/app"));
 const post_model_1 = __importDefault(require("../models/post.model"));
 const helpers_1 = require("./helpers");
 beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield post_model_1.default.destroy({ where: {},
-        truncate: true });
+    yield post_model_1.default.destroy({
+        where: {},
+        truncate: true
+    });
     const post = new post_model_1.default(helpers_1.postData);
     yield post.save();
 }));
-describe("Respuesta 200 de todos los posts", () => {
+describe("Pruebas para el endpoint de GET /API/POSTS", () => {
     test("Se recibe un codigo de respuesta 200 al solicitar los posts", done => {
         supertest_1.default(app_1.default)
             .get("/api/posts")
@@ -31,15 +33,31 @@ describe("Respuesta 200 de todos los posts", () => {
             done();
         });
     });
-});
-describe("Lectura de Posts", () => {
     test("Prueba que se pueda leer las notas de la base de datos", done => {
         supertest_1.default(app_1.default)
             .get("/api/posts")
             .then(response => {
-            expect(response.body.posts[0].titulo).toBe('Prueba');
+            expect(response.body.posts[0].titulo).toBe('Primer Post');
+            done();
+        });
+    });
+    test("Manda un codigo 404 al no encontrar el id del post", done => {
+        supertest_1.default(app_1.default)
+            .get("/api/posts/101dasa")
+            .then(response => {
+            expect(response.status).toBe(404);
+            done();
+        });
+    });
+    test("Obtener un post en especifico ", done => {
+        const estr = post_model_1.default;
+        supertest_1.default(app_1.default)
+            .get("/api/posts/1")
+            .then(response => {
+            expect(response.status).toBe(200);
+            expect(response.body.titulo).toEqual(helpers_1.postData.titulo);
             done();
         });
     });
 });
-//# sourceMappingURL=routes.test.js.map
+//# sourceMappingURL=Posts.test.js.map

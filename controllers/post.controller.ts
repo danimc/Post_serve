@@ -170,7 +170,7 @@ export const deletePost = async (req: Request, res: Response) => {
         await historial.save();
 
 
-        res.json({
+        res.status(204).json({
             msg: `Se elimino el Post ${post.titulo}`,
             data: post,
         });

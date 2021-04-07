@@ -161,7 +161,7 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         };
         const historial = new historial_post_model_1.default(historialData);
         yield historial.save();
-        res.json({
+        res.status(204).json({
             msg: `Se elimino el Post ${post.titulo}`,
             data: post,
         });
