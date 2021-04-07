@@ -163,6 +163,7 @@ export const putPost = async (req: Request, res: Response) => {
     }
 }
 
+// Elimina un Post por Id
 export const deletePost = async (req: Request, res: Response) => {
 
     const { id } = req.params;
@@ -205,6 +206,7 @@ export const deletePost = async (req: Request, res: Response) => {
     }
 }
 
+// Muestra todo el Historial de cambios del Post
 export const getHistorialPost = async (req: Request, res: Response) => {
     const { id } = req.params;
 

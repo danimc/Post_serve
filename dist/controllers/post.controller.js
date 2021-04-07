@@ -159,6 +159,7 @@ const putPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.putPost = putPost;
+// Elimina un Post por Id
 const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
@@ -193,6 +194,7 @@ const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.deletePost = deletePost;
+// Muestra todo el Historial de cambios del Post
 const getHistorialPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { id } = req.params;
