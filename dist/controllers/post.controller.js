@@ -37,7 +37,7 @@ const getPosts = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const tagPost = validador_post_helper_1.tagPosts(posts);
     res.json({
         total,
-        tagPost
+        Posts: tagPost
     });
 });
 exports.getPosts = getPosts;

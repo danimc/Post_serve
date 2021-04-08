@@ -12,10 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AllPosts = exports.nuevoPost = exports.postData = void 0;
-const app_1 = __importDefault(require("../models/app"));
+exports.AllPosts = exports.nuevoPost = exports.postData = exports.api = void 0;
+const app_1 = __importDefault(require("../../models/app"));
 const supertest_1 = __importDefault(require("supertest"));
-const api = supertest_1.default(app_1.default);
+exports.api = supertest_1.default(app_1.default);
 exports.postData = [
     {
         titulo: 'Primer Post',
@@ -31,15 +31,15 @@ exports.postData = [
     }
 ];
 exports.nuevoPost = {
-    titulo: 'Primer Post',
-    mensaje: 'Este es el primer Post de pruebas cargado'
+    titulo: 'Nuevo Post de Pruebas Post',
+    mensaje: 'Hola! este es un nuevo Post de Pruebas'
 };
 const AllPosts = () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield api.get('/api/posts');
+    const response = yield exports.api.get('/api/posts');
     return {
         contents: response.body.Posts.map((post) => post.content),
         response
     };
 });
 exports.AllPosts = AllPosts;
-//# sourceMappingURL=helpers.js.map
+//# sourceMappingURL=post.js.map

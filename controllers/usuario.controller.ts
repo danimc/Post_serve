@@ -126,8 +126,6 @@ export const deletetUsuario = async (req: Request, res: Response) => {
             });
         }
 
-
-        //Eliminando completamente al usuario
         await usuario.destroy();
 
         res.json({

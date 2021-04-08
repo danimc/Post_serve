@@ -16,7 +16,7 @@ export const getPosts = async (req: Request, res: Response) => {
 
     res.json({
         total,
-        tagPost
+        Posts: tagPost
     });
 }
 

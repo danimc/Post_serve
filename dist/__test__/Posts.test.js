@@ -15,16 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../models/app"));
 const post_model_1 = __importDefault(require("../models/post.model"));
-const helpers_1 = require("./helpers");
+const login_1 = require("./helpers/login");
+const post_1 = require("./helpers/post");
+let headerAdmin;
+let headerModerador;
+let headerEditor;
 beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
     yield post_model_1.default.destroy({
         where: {},
         truncate: true
     });
-    const post = new post_model_1.default(helpers_1.postData);
-    yield post.save();
+    for (const post of post_1.postData) {
+        const newPost = new post_model_1.default(post);
+        yield newPost.save();
+    }
+    headerAdmin = yield login_1.LoginAdmin();
+    headerModerador = yield login_1.LoginModerador();
+    headerEditor = yield login_1.LoginEditor();
 }));
-describe("Pruebas para el endpoint de GET /API/POSTS", () => {
+describe("Obtener Posts", () => {
     test("Se recibe un codigo de respuesta 200 al solicitar los posts", done => {
         supertest_1.default(app_1.default)
             .get("/api/posts")
@@ -37,7 +46,7 @@ describe("Pruebas para el endpoint de GET /API/POSTS", () => {
         supertest_1.default(app_1.default)
             .get("/api/posts")
             .then(response => {
-            expect(response.body.posts[0].titulo).toBe('Primer Post');
+            expect(response.body.Posts).toHaveLength(post_1.postData.length);
             done();
         });
     });
@@ -49,15 +58,70 @@ describe("Pruebas para el endpoint de GET /API/POSTS", () => {
             done();
         });
     });
-    test("Obtener un post en especifico ", done => {
-        const estr = post_model_1.default;
+    test("Obtener un post en especifico ", (done) => __awaiter(void 0, void 0, void 0, function* () {
         supertest_1.default(app_1.default)
             .get("/api/posts/1")
             .then(response => {
             expect(response.status).toBe(200);
-            expect(response.body.titulo).toEqual(helpers_1.postData.titulo);
+            expect(response.body.titulo).toContain('Primer Post');
+            done();
+        });
+    }));
+});
+describe("Nuevo Post", () => {
+    test("Solicita Token de acceso para agregar un nuevo Post", done => {
+        supertest_1.default(app_1.default)
+            .post("/api/posts")
+            .send(post_1.nuevoPost)
+            .then(response => {
+            expect(response.status).toBe(401);
+            expect(response.body.msg).toEqual('Token de acceso requerido');
             done();
         });
     });
+    test("No se agrega si no lleva datos en el body", done => {
+        supertest_1.default(app_1.default)
+            .post("/api/posts")
+            .then(response => {
+            expect(response.status).toBe(401);
+            done();
+        });
+    });
+    test("No se añade un post que no tenga titulo", (done) => __awaiter(void 0, void 0, void 0, function* () {
+        const fakeNote = {
+            mensaje: 'hola a todos este es un nuevo post de prueba'
+        };
+        supertest_1.default(app_1.default)
+            .post("/api/posts")
+            .set(headerAdmin)
+            .send(fakeNote)
+            .then(response => {
+            expect(response.status).toBe(400);
+            expect(response.body.errors).toHaveLength(1);
+            done();
+        });
+    }));
+    test("No se añade una post que no tenga mensaje", (done) => __awaiter(void 0, void 0, void 0, function* () {
+        const fakeNote = {
+            titulo: 'Titulo numero 4'
+        };
+        supertest_1.default(app_1.default)
+            .post("/api/posts")
+            .set(headerAdmin)
+            .send(fakeNote)
+            .then(response => {
+            expect(response.status).toBe(400);
+            expect(response.body.errors).toHaveLength(1);
+            done();
+        });
+    }));
+    test("Añadiendo nuevo Post a la Base de Datos con valores correctos", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield post_1.api.post('/api/posts')
+            .set(headerAdmin)
+            .send(post_1.nuevoPost);
+        expect(201);
+        const data = yield post_1.AllPosts();
+        expect(data.response.body.Posts).toHaveLength(post_1.postData.length + 1);
+    }));
 });
 //# sourceMappingURL=Posts.test.js.map

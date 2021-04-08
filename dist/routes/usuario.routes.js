@@ -40,6 +40,7 @@ router.delete('/:id', [
     middlewares_1.esAdminRol,
     express_validator_1.check('id', 'No es un formato Valido de Id de usuario').isNumeric(),
     express_validator_1.check('id').custom(middlewares_1.existeUsuarioId),
+    express_validator_1.check('id').custom(middlewares_1.esUsuarioAdmin),
     middlewares_1.validarCampos
 ], usuario_controller_1.deletetUsuario);
 exports.default = router;

@@ -126,7 +126,6 @@ const deletetUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function*
                 msg: 'El usuario ingresado no existe'
             });
         }
-        //Eliminando completamente al usuario
         yield usuario.destroy();
         res.json({
             msg: `Se elimino completamente el usuario ${usuario.nombre}`,

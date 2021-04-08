@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.existePostId = exports.existeUsuarioId = exports.emailExiste = exports.validarCampos = void 0;
+exports.existePostId = exports.esUsuarioAdmin = exports.existeUsuarioId = exports.emailExiste = exports.validarCampos = void 0;
 const express_validator_1 = require("express-validator");
 const usuario_model_1 = __importDefault(require("../models/usuario.model"));
 const post_model_1 = __importDefault(require("../models/post.model"));
@@ -38,6 +38,13 @@ const existeUsuarioId = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.existeUsuarioId = existeUsuarioId;
+const esUsuarioAdmin = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    // tslint:disable-next-line: triple-equals
+    if (id == 1) {
+        throw new Error(`No se puede eliminar este usuario`);
+    }
+});
+exports.esUsuarioAdmin = esUsuarioAdmin;
 const existePostId = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const existePost = yield post_model_1.default.findByPk(id);
     if (!existePost) {

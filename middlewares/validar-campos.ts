@@ -29,6 +29,14 @@ export const existeUsuarioId = async(id:number) =>{
     }
 }
 
+export const esUsuarioAdmin = async(id:number) =>{
+
+    // tslint:disable-next-line: triple-equals
+    if (id == 1) {
+       throw new Error(`No se puede eliminar este usuario`);
+    }
+}
+
 export const existePostId = async(id:number) =>{
 
     const existePost = await Post.findByPk( id );

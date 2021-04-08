@@ -5,26 +5,20 @@ import reviewRoutes from '../routes/reviews.routes';
 import userRoutes from '../routes/usuario.routes';
 const app = express();
 
+app.use(express.json())
+
 const apiPaths = {
-    usuarios:   '/api/usuarios',
-    auth:       '/api/auth',
-    posts:      '/api/posts',
-    reviews:     '/api/posts/review'
+  usuarios: '/api/usuarios',
+  auth: '/api/auth',
+  posts: '/api/posts',
+  reviews: '/api/posts/review'
 }
 
+app.use(apiPaths.auth, authRoutes);
 app.use(apiPaths.posts, postRoutes);
-app.use( apiPaths.usuarios, userRoutes);
-app.use( apiPaths.posts, postRoutes);
-app.use( apiPaths.reviews, reviewRoutes);
+app.use(apiPaths.usuarios, userRoutes);
+app.use(apiPaths.posts, postRoutes);
+app.use(apiPaths.reviews, reviewRoutes);
 
-/*
-
-app.get("/", (req, res) => {
-  res.status(200).send("Hello World!");
-});
-
-app.get('/api/posts', [], getPosts);
-
-*/
 
 export default app;

@@ -39,7 +39,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             });
         }
         const token = yield token_jwt_helper_1.default(usuario.id);
-        res.json({
+        res.status(202).json({
             usuario,
             token
         });

@@ -34,7 +34,7 @@ export const login = async(req: Request, res: Response) => {
 
         const token = await generarJWT(usuario.id);
 
-        res.json({
+        res.status(202).json({
             usuario,
             token
         });
