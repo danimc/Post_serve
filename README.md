@@ -2,7 +2,9 @@
 Servidor en Node Express para sistema de post's
 
 ## Tablas base de datos
-  se añadio en el directorio **database** el script .sql para crear las tablas necesarias del sistema, de esta manera, se podra ingresar las tablas a una DB ya creada.
+  se añadio en el directorio **database** el script .sql para crear las tablas necesarias del sistema, de esta manera, se podra ingresar las tablas a una DB ya creada. se deben generar los dos scripts en bd de datos separadas para test y para serve
+  
+  en el archivo .env en raiz puede definir los accesos a las bd
 
 ### Despliegue del sistema
 
