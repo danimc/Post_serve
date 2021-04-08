@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../models/app"));
+const historial_post_model_1 = __importDefault(require("../models/historial-post.model"));
 const post_model_1 = __importDefault(require("../models/post.model"));
 const login_1 = require("./helpers/login");
 const post_1 = require("./helpers/post");
@@ -22,6 +23,10 @@ let headerModerador;
 let headerEditor;
 beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
     yield post_model_1.default.destroy({
+        where: {},
+        truncate: true
+    });
+    yield historial_post_model_1.default.destroy({
         where: {},
         truncate: true
     });
@@ -122,6 +127,14 @@ describe("Nuevo Post", () => {
         expect(201);
         const data = yield post_1.AllPosts();
         expect(data.response.body.Posts).toHaveLength(post_1.postData.length + 1);
+    }));
+    test("Valida que editor no pueda crear un nuevo Post", () => __awaiter(void 0, void 0, void 0, function* () {
+        yield post_1.api.post('/api/posts')
+            .set(headerEditor)
+            .send(post_1.nuevoPost);
+        expect(401);
+        const data = yield post_1.AllPosts();
+        expect(data.response.body.Posts).toHaveLength(post_1.postData.length);
     }));
 });
 //# sourceMappingURL=Posts.test.js.map

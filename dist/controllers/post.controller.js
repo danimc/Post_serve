@@ -105,6 +105,10 @@ const postNuevoPost = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             yield historial.save();
             //console.log(historial);
         }
+        res.status(201).json({
+            msg: 'Nuevo post generado',
+            data
+        });
     }
     catch (error) {
         console.log(error);
@@ -112,10 +116,6 @@ const postNuevoPost = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             msg: 'Error al intentar capturar nuevo Post en la base de datos'
         });
     }
-    res.status(201).json({
-        msg: 'Nuevo post generado',
-        data
-    });
 });
 exports.postNuevoPost = postNuevoPost;
 // Actualizar Posts

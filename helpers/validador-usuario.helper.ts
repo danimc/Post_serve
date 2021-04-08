@@ -12,10 +12,5 @@ export const rolValido = async (rol: any) => {
     }
 }
 
-export const passValido = (password:string) => {
 
-    if (+password.length <= 6) {
-        return { msg: 'La contraseña debe tener una longitud minima de 6 caracteres' };
-    }
-}
 

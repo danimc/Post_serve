@@ -1,5 +1,6 @@
 import request from 'supertest';
 import app from '../models/app';
+import Historial from '../models/historial-post.model';
 import Post from '../models/post.model';
 import { LoginAdmin, LoginEditor, LoginModerador } from './helpers/login';
 import { AllPosts, api, nuevoPost, postData } from './helpers/post';
@@ -10,6 +11,11 @@ let headerEditor: object;
 
 beforeEach(async () => {
   await Post.destroy({
+    where: {},
+    truncate: true
+  });
+
+  await Historial.destroy({
     where: {},
     truncate: true
   });
@@ -126,6 +132,17 @@ describe("Nuevo Post", () => {
 
     const data = await AllPosts();
     expect(data.response.body.Posts).toHaveLength(postData.length + 1);
+  });
+
+  test("Valida que editor no pueda crear un nuevo Post", async () => {
+
+    await api.post('/api/posts')
+    .set(headerEditor)
+    .send(nuevoPost);
+    expect(401);
+
+    const data = await AllPosts();
+    expect(data.response.body.Posts).toHaveLength(postData.length);
   });
 
 });

@@ -145,6 +145,8 @@ CREATE TABLE `tb-usuarios` (
 
 INSERT INTO `tb-usuarios` (`id`, `nombre`, `email`, `estado`, `rol`, `createdAt`, `updatedAt`, `password`) VALUES
 (1, 'Admin', 'daniel_k310a@hotmail.com', 1, 1, '2021-03-27 21:53:50', '2021-03-26 05:57:57', '$2a$10$um4na7jJgQHF7zbuNExzDeePhBuxajtVffegPB5VCWSg9pnf7RGyi');
+(2, 'Moderador', 'test1@test.com', 1, 2, '2021-03-27 21:53:50', '2021-03-26 05:57:57', '$2a$10$um4na7jJgQHF7zbuNExzDeePhBuxajtVffegPB5VCWSg9pnf7RGyi'),
+(3, 'Editor', 'test2@test.com', 1, 3, '2021-03-27 21:53:50', '2021-03-26 05:57:57', '$2a$10$um4na7jJgQHF7zbuNExzDeePhBuxajtVffegPB5VCWSg9pnf7RGyi'),
 
 --
 -- Índices para tablas volcadas

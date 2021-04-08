@@ -80,10 +80,6 @@ const puttUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const { id } = req.params;
     const _a = req.body, { password, rol } = _a, data = __rest(_a, ["password", "rol"]);
     if (password) {
-        const passErr = validador_usuario_helper_1.passValido(password);
-        if (passErr) {
-            return res.status(400).json(passErr);
-        }
         // Encriptando contraseña
         const salt = bcryptjs_1.default.genSaltSync();
         data.password = bcryptjs_1.default.hashSync(password, salt);

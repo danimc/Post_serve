@@ -38,6 +38,7 @@ router.put('/:id', [
     check('id').custom(existePostId),
     validarCampos
 ], putPost);
+
 // Eliminar Post
 router.delete('/:id', [
     validarJWT,

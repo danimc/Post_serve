@@ -42,7 +42,7 @@ const esRolPermitido = (...roles) => {
             });
         }
         if (!roles.includes(req.usuario.rol)) {
-            res.status(401).json({
+            return res.status(401).json({
                 msg: ' Para hacer esta funcion, necesitas tener los permisos correspondientes'
             });
         }

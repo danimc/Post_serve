@@ -100,17 +100,17 @@ export const postNuevoPost = async (req: Request, res: Response) => {
             //console.log(historial);
         }
 
+        res.status(201).json({
+            msg: 'Nuevo post generado',
+            data
+        });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
             msg: 'Error al intentar capturar nuevo Post en la base de datos'
         });
     }
-
-    res.status(201).json({
-        msg: 'Nuevo post generado',
-        data
-    });
 }
 
 // Actualizar Posts

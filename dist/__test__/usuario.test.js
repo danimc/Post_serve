@@ -86,15 +86,17 @@ describe("Editar Usuarios", () => {
             done();
         });
     });
-    test("Manda Error si no se envian parametros", done => {
-        const newData = {
-            'nombre': 'Nuevo Nombre'
+    test("Envia error si la contraseña no cumple con la longitud minima permitida (6 caracteres)", done => {
+        const data = {
+            password: "hola"
         };
         supertest_1.default(app_1.default)
             .put("/api/usuarios/2")
             .set(headerAdmin)
+            .send(data)
             .then(response => {
-            expect(response.status).toBe(200);
+            expect(response.body.errors).toHaveLength(1);
+            expect(response.status).toBe(400);
             done();
         });
     });

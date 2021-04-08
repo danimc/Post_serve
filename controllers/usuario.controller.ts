@@ -69,11 +69,6 @@ export const puttUsuario = async (req: Request, res: Response) => {
     const { password, rol, ...data } = req.body;
 
     if (password) {
-        const passErr = passValido(password);
-        if (passErr) {
-            return res.status(400).json(passErr);
-        }
-
         // Encriptando contraseña
         const salt = crypt.genSaltSync();
         data.password = crypt.hashSync(password, salt);

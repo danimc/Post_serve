@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.passValido = exports.rolValido = void 0;
+exports.rolValido = void 0;
 const rol_model_1 = __importDefault(require("../models/rol.model"));
 // Verifica que el rol ingresado este dado de alta en la BD
 const rolValido = (rol) => __awaiter(void 0, void 0, void 0, function* () {
@@ -25,10 +25,4 @@ const rolValido = (rol) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.rolValido = rolValido;
-const passValido = (password) => {
-    if (+password.length <= 6) {
-        return { msg: 'La contraseña debe tener una longitud minima de 6 caracteres' };
-    }
-};
-exports.passValido = passValido;
 //# sourceMappingURL=validador-usuario.helper.js.map
